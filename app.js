@@ -24,7 +24,7 @@ app.use('/api/v1/tasks', tasks); //for the tasks API
 
 const start = async () => {
     try {
-        await connectDB()
+        await connectDB(process.env.DB_CONNECTION)
         app.listen(port,() => {
             console.log(`Server running at http://localhost:${port}`)
         });
