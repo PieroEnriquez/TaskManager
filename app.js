@@ -1,6 +1,10 @@
 const express = require('express');
 const app = express();
 const tasks = require('./routes/tasks');
+const connectDB = require('./db/connect');
+const dotenv = require('dotenv');
+dotenv.config();
+
 
 const port = process.env.PORT || 3000;
 
@@ -18,6 +22,15 @@ app.use('/api/v1/tasks', tasks); //for the tasks API
 
 
 
-app.listen(port,() => {
-    console.log(`Server running at http://localhost:${port}`)
-});
+const start = async () => {
+    try {
+        await connectDB()
+        app.listen(port,() => {
+            console.log(`Server running at http://localhost:${port}`)
+        });
+    } catch (error) {
+        console.log(error)
+    }
+};
+
+start();
