@@ -4,6 +4,8 @@ const tasks = require('./routes/tasks');
 const connectDB = require('./db/connect');
 const dotenv = require('dotenv');
 dotenv.config();
+const notFound = require('./middleware/not-found');
+const errorHandlerMiddleware = require('./middleware/error-handler');
 
 
 const port = process.env.PORT || 3000;
@@ -18,6 +20,9 @@ app.get('/', (req, res) => {
 
 app.use('/api/v1/tasks', tasks); //for the tasks API
 
+app.use(notFound);
+
+app.use(errorHandlerMiddleware);
 
 
 const start = async () => {
